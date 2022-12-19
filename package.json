@@ -8,6 +8,8 @@
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
+    "@hookform/resolvers": "^2.9.10",
     "@reduxjs/toolkit": "^1.6.1",
     "@vitejs/plugin-react": "^3.0.0",
     "daisyui": "^2.45.0",
@@ -17,7 +19,8 @@
     "react-icons": "^4.7.1",
     "react-redux": "^8.0.2",
     "react-router-dom": "^6.5.0",
-    "react-toastify": "^9.1.1"
+    "react-toastify": "^9.1.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

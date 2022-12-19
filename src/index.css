@@ -21,6 +21,12 @@
   .form-input {
     @apply input input-bordered w-full mb-3 transition-all duration-100 ease-in active:border-primary focus:border-primary focus:outline-none;
   }
+  .form-button {
+    @apply btn btn-primary btn-block;
+  }
+  .responsive-grid {
+    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+  }
 }
 
 .loading-spinner-container {

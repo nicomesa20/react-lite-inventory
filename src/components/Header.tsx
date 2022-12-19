@@ -10,7 +10,7 @@ const Header = () => {
           <img className='w-10 h-10' src='/images/inventory.png' alt='' />
           <p className='ml-2'>Stapp</p>
         </Link>
-        <Link to='/' className='btn btn-primary flex items-center gap-1'>
+        <Link to='/login' className='btn btn-primary flex items-center gap-1'>
           Logout
           <FaSignOutAlt />
         </Link>

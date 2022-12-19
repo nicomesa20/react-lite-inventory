@@ -10,6 +10,26 @@ const productsMock: Product[] = [
     name: 'Rascahuevos',
     description: 'Rasca huevos chimba',
   },
+  {
+    id: '123',
+    name: 'Rascahuevos',
+    description: 'Rasca huevos chimba',
+  },
+  {
+    id: '123',
+    name: 'Rascahuevos',
+    description: 'Rasca huevos chimba',
+  },
+  {
+    id: '123',
+    name: 'Rascahuevos',
+    description: 'Rasca huevos chimba',
+  },
+  {
+    id: '123',
+    name: 'Rascahuevos',
+    description: 'Rasca huevos chimba',
+  },
 ];
 
 const Inventory: FC = () => {
@@ -24,7 +44,7 @@ const Inventory: FC = () => {
           <h1 className='page-caption'>Manage inventory</h1>
           <p className='page-subcaption'>Please select a company</p>
         </div>
-        <div>
+        <div className='responsive-grid'>
           {products.map((product) => (
             <ProductItem key={product.id} product={product} />
           ))}

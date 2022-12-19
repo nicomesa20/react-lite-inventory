@@ -12,4 +12,4 @@ interface Product {
   description: string;
 }
 
-type TailwindThemeColors = 'primary' | 'accent' | 'secondary' | 'info' | 'success'
+type TailwindBackgroundThemeColors = 'bg-primary' | 'bg-accent' | 'bg-secondary' | 'bg-info' | 'bg-success'
