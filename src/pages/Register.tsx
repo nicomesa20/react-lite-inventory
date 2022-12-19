@@ -1,31 +1,27 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
+import FormHeader from '../components/FormHeader';
+import { FaUser } from 'react-icons/fa';
 
 const Register: FC = () => {
   return (
-    <div className='h-screen flex flex-col justify-center'>
-      <div className='w-[380px] m-auto bg-indigo-100 py-10 px-4 rounded-lg text-gray-700'>
+    <div className='container'>
+      <div className='max-w-4xl mt-24 mx-auto px-4'>
+        <FormHeader action='Register' icon={<FaUser />} />
         <form>
-          <h1 className='font-bold text-3xl uppercase text-center mb-4'>
-            Registro
-          </h1>
-          <input
-            type='email'
-            placeholder='email'
-            className='input input-bordered input-primary w-full mb-3 transition-all ease-out'
-          />
+          <input type='email' placeholder='email' className='form-input ' />
           <input
             type='password'
             placeholder='password'
-            className='input input-bordered input-primary w-full mb-3 transition-all ease-out'
+            className='form-input '
           />
-          <p>
-            Ya tienes una cuenta?
-            <Link to='/login' className='link link-primary ml-2 mb-2'>
-              Logeate!
+          <p className='mb-2'>
+            Have an account?
+            <Link to='/login' className='link link-primary ml-2'>
+              Login!
             </Link>
           </p>
-          <button className='btn btn-primary w-full'>Adelante</button>
+          <button className='btn btn-primary btn-block'>Submit</button>
         </form>
       </div>
     </div>
