@@ -25,7 +25,7 @@
     @apply btn btn-primary btn-block;
   }
   .responsive-grid {
-    @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
+    @apply grid  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4;
   }
 }
 

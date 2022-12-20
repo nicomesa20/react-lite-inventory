@@ -1,13 +1,15 @@
-import React, { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import FormHeader from '../components/FormHeader';
 import { FaUser } from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import GenericError from '../components/GenericError';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Input from '../components/Input';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { register as registerAction, reset } from '../features/auth';
+import Spinner from '../components/Spinner';
 
 type Form = {
   email: string;
@@ -18,6 +20,28 @@ type Form = {
 
 const Register: FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const { user, isLoading, isSuccess, message, isError } = useAppSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    console.log(isSuccess, user);
+
+    // Redirect when logged in
+    if (isSuccess || user) {
+      navigate('/');
+    }
+
+    // Reset
+    dispatch(reset());
+  }, [isError, isSuccess, user, message, navigate, dispatch]);
+
   const formSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string()
@@ -36,10 +60,14 @@ const Register: FC = () => {
     register,
     formState: { errors },
   } = useForm<Form>({ mode: 'onTouched', resolver: yupResolver(formSchema) });
+
   const registerHandle = (value: Form) => {
-    toast.success('Registered in!');
-    navigate('/');
+    const { confirmPassword, ...registerPayload } = value;
+    dispatch(registerAction(registerPayload));
   };
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div className='container'>
       <div className='max-w-4xl mt-24 mx-auto px-4'>

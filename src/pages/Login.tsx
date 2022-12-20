@@ -1,11 +1,9 @@
-import React, { BaseSyntheticEvent, FC, FormEvent, useEffect } from 'react';
+import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 import FormHeader from '../components/FormHeader';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { patterns } from '../constants';
-import GenericError from '../components/GenericError';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Input from '../components/Input';

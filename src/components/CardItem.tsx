@@ -14,7 +14,7 @@ const CardItem: FC<Props> = ({ children, redirect }) => {
 
   return (
     <div
-      className={`relative grid gap-1 pl-6 pr-3 py-3 bg-slate-100 rounded-lg overflow-hidden before:absolute before:top-0 before:left-0 before:w-2 before:h-full before:bg-primary hover:bg-slate-200 hover:shadow-lg transition-all duration-75 ease-out ${
+      className={`relative grid gap-1 pl-6 pr-3 py-3 bg-slate-100 rounded-lg overflow-hidden before:absolute before:top-0 before:left-0 before:w-2 before:h-full before:bg-primary hover:bg-slate-200 hover:shadow-lg before:hover:w-3 transition-all duration-75 ease-in ${
         redirect && 'hover:cursor-pointer'
       }`}
       onClick={handleRedirect}

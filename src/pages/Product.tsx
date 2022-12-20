@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { patterns } from '../constants';
 import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
 
 type Form = {
   name: string;
@@ -13,7 +14,7 @@ type Form = {
   phone: string;
 };
 
-const CreateCompany = () => {
+const Product = () => {
   const formSchema = yup.object().shape({
     name: yup.string().required('Name is required'),
     addres: yup.string().required('Address is required'),
@@ -34,18 +35,23 @@ const CreateCompany = () => {
   const {
     formState: { errors },
     register,
+    handleSubmit,
   } = useForm<Form>({ mode: 'onTouched', resolver: yupResolver(formSchema) });
+
+  const onCreate = (value: Form) => {
+    console.log(value);
+  };
 
   return (
     <div>
       <Header />
       <main className='container | mt-6'>
-        <BackButton redirect='/admin' />
+        <BackButton />
         <div className='text-center mb-4'>
           <h1 className='page-caption m-0'>Create new company </h1>
           <p className='page-subcaption'>Please fill out the form bellow</p>
         </div>
-        <form>
+        <form onSubmit={handleSubmit(onCreate)}>
           <Input register={register('name')} errors={errors} type='text' />
           <Input register={register('address')} errors={errors} type='email' />
           <Input register={register('nit')} errors={errors} type='email' />
@@ -57,4 +63,4 @@ const CreateCompany = () => {
     </div>
   );
 };
-export default CreateCompany;
+export default Product;
