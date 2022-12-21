@@ -1,21 +1,16 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { User } from '../../models/user';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosError } from 'axios';
 import authService from './authService';
 
 interface IInitialState {
-  user: User | null;
+  user: IUser | null;
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
   message: string;
 }
 
-const localUser = JSON.parse(localStorage.getItem('user')!)
-
-console.log(localUser);
-
-// Get user from localStorage
-const user: User = localUser && new User(localUser)
+const user = JSON.parse(localStorage.getItem('user')!)
 
 const initialState: IInitialState = {
   user: user ?? null,
@@ -29,25 +24,34 @@ const initialState: IInitialState = {
 export const register = createAsyncThunk('auth/register', async (user: UserWithPassword, thunkAPI) => {
   try {
     return await authService.register(user)
-  } catch (error: any) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString()
-    return thunkAPI.rejectWithValue(message)
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+
+    throw error;
   }
 
 })
 export const login = createAsyncThunk('auth/login', async (user: LoginUser, thunkAPI) => {
   try {
     return await authService.login(user)
-  } catch (error: any) {
-    const message =
-      (error.response && error.response.data && error.response.data.message) ||
-      error.message ||
-      error.toString()
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString()
 
-    return thunkAPI.rejectWithValue(message)
+      return thunkAPI.rejectWithValue(message)
+    }
+
+    throw error;
   }
 })
 
@@ -72,7 +76,6 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.user = new User(action.payload)
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false
@@ -89,7 +92,7 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.user = new User(action.payload)
+        state.user = action.payload;
         state.isSuccess = true;
       })
       .addCase(login.rejected, (state, action) => {

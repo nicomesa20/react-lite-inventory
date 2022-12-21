@@ -13,7 +13,7 @@ const ProductsList: FC<Props> = ({ products, isAdmin }) => {
       {products.length > 0 ? (
         <div className='responsive-grid | mt-6'>
           {products.map((product) => (
-            <ProductItem key={product.id} product={product} />
+            <ProductItem key={product.id} product={product} isAdmin={isAdmin} />
           ))}
         </div>
       ) : (

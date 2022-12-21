@@ -1,39 +1,20 @@
-import { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../app/hooks';
 import BackButton from '../components/BackButton';
 import CompanyList from '../components/CompaniesList';
 import Header from '../components/Header';
-
-const companiesMock: Company[] = [
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-];
+import Spinner from '../components/Spinner';
+import { useCompany } from '../hooks/useCompany';
+import { User } from '../models/user';
 
 const InventoryList = () => {
-  const [companies, setCompanies] = useState(companiesMock);
+  const { companies, isLoading } = useCompany();
+  const { user: userData } = useAppSelector((state) => state.auth);
+
+  const user = new User(userData!);
+
+  if (isLoading) return <Spinner />;
   return (
     <div>
       <Header />
@@ -44,7 +25,7 @@ const InventoryList = () => {
           <FaPlus className='mr-2' />
           New company
         </Link>
-        <CompanyList companies={companies} isAdmin={true} />
+        <CompanyList companies={companies} isAdmin={user.isAdmin} />
       </main>
     </div>
   );

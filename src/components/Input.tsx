@@ -7,11 +7,17 @@ interface Props extends Partial<HTMLInputElement> {
   errors?: FieldErrors;
 }
 
-const Input: FC<Props> = ({ register, type = 'text', errors }) => {
+const Input: FC<Props> = ({
+  register,
+  type = 'text',
+  errors,
+  ...inputParams
+}) => {
   return (
     <div className='form-group'>
       <input
         {...register}
+        {...inputParams}
         type={type}
         placeholder={register.name}
         className='form-input'

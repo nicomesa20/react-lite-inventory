@@ -27,5 +27,11 @@ interface Company {
 interface Product {
   id: string;
   name: string;
+  quantity: number;
   description: string;
+  [key: string]: string | number;
+}
+
+interface CreateProductRequest extends Omit<Product, 'id'> {
+  companyId: string
 }

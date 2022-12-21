@@ -31,11 +31,10 @@ const Register: FC = () => {
       toast.error(message);
     }
 
-    console.log(isSuccess, user);
-
     // Redirect when logged in
     if (isSuccess || user) {
-      navigate('/');
+      toast.success('Register successfull!');
+      navigate('/login');
     }
 
     // Reset

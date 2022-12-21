@@ -1,6 +1,6 @@
 export enum Roles {
-  ADMIN = 'admin',
-  EXTERNAL = 'external'
+  ADMIN = 'Admin',
+  EXTERNAL = 'External'
 }
 
 export class User implements IUser {

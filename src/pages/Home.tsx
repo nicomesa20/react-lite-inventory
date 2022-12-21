@@ -1,40 +1,21 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useAppSelector } from '../app/hooks';
 import CompanyList from '../components/CompaniesList';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Spinner from '../components/Spinner';
 import Stats from '../components/Stats';
-
-const companiesMock: Company[] = [
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-  {
-    address: 'Calle 123',
-    name: 'SirPollo',
-    nit: '12345',
-    phone: '1234567',
-  },
-];
+import { useCompany } from '../hooks/useCompany';
+import { User } from '../models/user';
 
 const Home: FC = () => {
-  const [companies] = useState(companiesMock);
-  const { user } = useAppSelector((state) => state.auth);
+  const { companies, isLoading } = useCompany();
+  const { user: userData } = useAppSelector((state) => state.auth);
+
+  const user = new User(userData!);
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div className='h-screen flex flex-col'>
       <Header />

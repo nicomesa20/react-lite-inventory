@@ -14,7 +14,11 @@ const CompanyList: FC<Props> = ({ companies, isAdmin }) => {
         <>
           <div className='responsive-grid | mt-6'>
             {companies.map((company) => (
-              <CompanyItem key={company.nit} company={company} />
+              <CompanyItem
+                key={company.nit}
+                company={company}
+                isAdmin={isAdmin}
+              />
             ))}
           </div>
         </>

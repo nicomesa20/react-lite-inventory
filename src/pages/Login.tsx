@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 import FormHeader from '../components/FormHeader';
@@ -7,30 +7,50 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Input from '../components/Input';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { login, reset } from '../features/auth';
+import Spinner from '../components/Spinner';
 type Form = {
   email: string;
   password: string;
 };
 
+const formSchema = yup.object().shape({
+  email: yup
+    .string()
+    .email('Please enter a valid email')
+    .required('Emaile is required'),
+  password: yup.string().required('Password is required'),
+});
+
 const Login: FC = () => {
   const navigate = useNavigate();
-  const formSchema = yup.object().shape({
-    email: yup
-      .string()
-      .email('Please enter a valid email')
-      .required('Emaile is required'),
-    password: yup.string().required('Password is required'),
-  });
+  const dispatch = useAppDispatch();
+
+  const { isError, user, isLoading, isSuccess, message } = useAppSelector(
+    (state) => state.auth
+  );
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm<Form>({ mode: 'onTouched', resolver: yupResolver(formSchema) });
 
+  useEffect(() => {
+    isError && toast.error(message);
+
+    if (isSuccess || user) {
+      toast.success('Login successfull!');
+      navigate('/');
+    }
+  }, [isError, isSuccess, user, message, navigate, dispatch]);
+
   const loginHandle = (value: Form) => {
-    toast.success('Logged in!');
-    navigate('/');
+    dispatch(login(value));
   };
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className='container'>

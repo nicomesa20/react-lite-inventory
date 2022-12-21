@@ -6,26 +6,28 @@ import {
   FaTrashAlt,
 } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../app/hooks';
 import CardItem from './CardItem';
 
 interface Props {
   product: Product;
+  isAdmin: boolean;
 }
 
-const ProductItem: FC<Props> = ({ product }) => {
-  const { user } = useAppSelector((state) => state.auth);
-
+const ProductItem: FC<Props> = ({ product, isAdmin }) => {
   return (
     <CardItem>
-      <h2 className='text-3xl text-secondary'>{product.name}</h2>
-      <div className='flex text-xl items-center '>
-        <FaFingerprint className='mr-2 text-primary' /> {product.id}
+      <div className='flex justify-between items-center'>
+        <h2 className='text-3xl text-secondary'>{product.name}</h2>
       </div>
-      <div className='flex text-xl items-center '>
+      <div className='flex text-xl items-center'>
         <FaInfoCircle className='mr-2 text-secondary' /> {product.description}
       </div>
-      {user?.isAdmin && (
+      <div className='flex text-xl items-center '>
+        <p className='badge'>
+          {product.quantity} <span className='ml-3'> items </span>
+        </p>
+      </div>
+      {isAdmin && (
         <div className='flex justify-end items-center gap-2'>
           <Link to='/product'>
             <FaEdit />
