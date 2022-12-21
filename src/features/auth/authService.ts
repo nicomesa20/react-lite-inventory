@@ -1,7 +1,7 @@
 import axios from 'axios'
 import parseJwt from '../../utils/parseJwt'
 
-const API_URL = `http://${import.meta.env.VITE_API_URL}/auth`
+const API_URL = `${import.meta.env.VITE_API_URL}/auth`
 
 const userAPI = axios.create({ baseURL: API_URL })
 
