@@ -39,6 +39,25 @@ export const getProducts = createAsyncThunk('products/getAll', async (id: string
   }
 })
 
+export const deleteItem = createAsyncThunk('products/delete', async (id: string, thunkAPI: any) => {
+  try {
+    const token: string = thunkAPI.getState().auth.user.token
+    await productService.deleteProduct(id, token)
+    return id
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      const message =
+        (error.response && error.response.data && error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+
+    throw error;
+  }
+})
+
 
 export const createProduct = createAsyncThunk('products/createProduct', async (value: CreateProductRequest, thunkAPI: any) => {
   try {
@@ -116,6 +135,19 @@ export const productSlice = createSlice({
         state.isSuccess = true;
       })
       .addCase(downloadPdf.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as any;
+      })
+      .addCase(deleteItem.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.products = state.products.filter(product => product.id !== action.payload)
+      })
+      .addCase(deleteItem.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as any;

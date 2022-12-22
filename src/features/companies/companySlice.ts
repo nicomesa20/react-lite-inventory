@@ -91,7 +91,7 @@ export const companySlice = createSlice({
         state.companies = action.payload;
       })
       .addCase(getCompanies.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isError = true;
         state.message = action.payload as any;
       })
@@ -116,7 +116,7 @@ export const companySlice = createSlice({
         state.companies = state.companies.filter((company: Company) => company.id !== action.payload)
       })
       .addCase(deleteCompany.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.isError = true;
         state.message = action.payload as any;
       })

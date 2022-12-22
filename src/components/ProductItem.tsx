@@ -1,11 +1,8 @@
-import { FC } from 'react';
-import {
-  FaFingerprint,
-  FaInfoCircle,
-  FaEdit,
-  FaTrashAlt,
-} from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FC, useEffect } from 'react';
+import { FaInfoCircle, FaTrashAlt } from 'react-icons/fa';
+import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { deleteItem } from '../features/product';
 import CardItem from './CardItem';
 
 interface Props {
@@ -14,6 +11,20 @@ interface Props {
 }
 
 const ProductItem: FC<Props> = ({ product, isAdmin }) => {
+  const { isError, isSuccess, message } = useAppSelector(
+    (state) => state.products
+  );
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isError) toast.error(message);
+  }, [isError, isSuccess, message]);
+
+  const handleProductDelete = () => {
+    dispatch(deleteItem(product.id));
+  };
+
   return (
     <CardItem>
       <div className='flex justify-between items-center'>
@@ -29,10 +40,7 @@ const ProductItem: FC<Props> = ({ product, isAdmin }) => {
       </div>
       {isAdmin && (
         <div className='flex justify-end items-center gap-2'>
-          <Link to='/product'>
-            <FaEdit />
-          </Link>
-          <button>
+          <button onClick={handleProductDelete}>
             <FaTrashAlt />
           </button>
         </div>

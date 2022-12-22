@@ -51,7 +51,7 @@ const useCreateTicket = () => {
 
     if (isSuccess) {
       dispatch(reset());
-      navigate('/');
+      navigate('/inventory');
       toast.success('Company created');
     }
 

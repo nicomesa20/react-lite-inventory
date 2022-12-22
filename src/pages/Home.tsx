@@ -20,7 +20,7 @@ const Home: FC = () => {
     <div className='h-screen flex flex-col'>
       <Header />
       <main className='container mt-10 grid'>
-        <Stats isAdmin={!!user?.isAdmin} />
+        <Stats companyCount={companies.length} isAdmin={!!user?.isAdmin} />
         <CompanyList companies={companies} isAdmin={!!user?.isAdmin} />
       </main>
       <Footer />
