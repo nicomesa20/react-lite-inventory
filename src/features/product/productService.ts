@@ -45,7 +45,7 @@ const deleteProduct = async (id: string, token: string) => {
     }
   }
 
-  const response = await productAPI.delete(`delete-product/${id}`, config);
+  const response = await productAPI.delete(`remove-article/${id}`, config);
   return response.data;
 }
 
